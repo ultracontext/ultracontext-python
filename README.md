@@ -44,6 +44,31 @@ Replace messages, compact/offload context, replay decisions and roll back mistak
 
 <br />
 
+## Why Context Matters
+
+Context is the RAM of LLMs — everything they can see.
+
+As context grows, model attention spreads thin — this is known as **context rot**. We should aim to provide the smallest set of high-signal tokens that get the job done.
+
+Right now, we're reinventing the wheel for every car we build. Instead of tackling interesting problems, we catch ourselves spending most of our time gluing context together.
+
+**It's time to simplify.**
+
+<br />
+
+## Why UltraContext
+
+- **Simple API** — Five methods. That's it.
+- **Automatic versioning** — Updates/deletes create versions. Nothing is lost.
+- **Time-travel** — Jump to any point by version, index, or timestamp.
+- **Schema-free** — Store any JSON. Own your data structure.
+- **Framework-agnostic** — Works with any LLM framework.
+- **Fast** — Globally distributed. Low latency.
+
+Just plug & play.
+
+<br />
+
 ## Install
 
 ```bash
@@ -52,7 +77,7 @@ pip install ultracontext
 
 <br />
 
-## Quick Start
+## 🚀 Quick Start
 
 ```python
 from ultracontext import UltraContext
