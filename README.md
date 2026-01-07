@@ -19,7 +19,7 @@
     <img src="https://img.shields.io/pypi/v/ultracontext" alt="PyPI version" />
   </a>
   <a href="https://github.com/ultracontext/ultracontext-python/blob/main/LICENSE">
-    <img src="https://img.shields.io/pypi/l/ultracontext" alt="license" />
+    <img src="https://img.shields.io/pypi/l/ultracontext?v=1" alt="license" />
   </a>
 </p>
 
