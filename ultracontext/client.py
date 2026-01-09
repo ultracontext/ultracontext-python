@@ -190,6 +190,7 @@ class UltraContext(_BaseClient):
     def update(
         self,
         context_id: str,
+        updates: Optional[List[Dict[str, Any]]] = None,
         *,
         id: Optional[str] = None,
         index: Optional[int] = None,
@@ -197,16 +198,25 @@ class UltraContext(_BaseClient):
         **fields: Any,
     ) -> UpdateResponse:
         """
-        Update message by id or index.
+        Update message(s) by id or index.
 
         Args:
             context_id: Context ID
-            id: Message ID to update
-            index: Message index to update (0=first, -1=last)
+            updates: List of updates for batch mode (each dict has id/index + fields)
+            id: Message ID to update (single mode)
+            index: Message index to update, 0=first, -1=last (single mode)
             metadata: Version metadata for audit trail
-            **fields: Fields to update on the message
+            **fields: Fields to update on the message (single mode)
         """
-        body: Dict[str, Any] = {**fields}
+        # batch mode
+        if updates is not None:
+            body: Dict[str, Any] = {"updates": updates}
+            if metadata:
+                body["metadata"] = metadata
+            return self._request("PATCH", f"/contexts/{context_id}", json=body)
+
+        # single mode
+        body = {**fields}
         if id is not None:
             body["id"] = id
         if index is not None:
@@ -366,14 +376,23 @@ class AsyncUltraContext(_BaseClient):
     async def update(
         self,
         context_id: str,
+        updates: Optional[List[Dict[str, Any]]] = None,
         *,
         id: Optional[str] = None,
         index: Optional[int] = None,
         metadata: Optional[Dict[str, Any]] = None,
         **fields: Any,
     ) -> UpdateResponse:
-        """Update message by id or index."""
-        body: Dict[str, Any] = {**fields}
+        """Update message(s) by id or index."""
+        # batch mode
+        if updates is not None:
+            body: Dict[str, Any] = {"updates": updates}
+            if metadata:
+                body["metadata"] = metadata
+            return await self._request("PATCH", f"/contexts/{context_id}", json=body)
+
+        # single mode
+        body = {**fields}
         if id is not None:
             body["id"] = id
         if index is not None:
